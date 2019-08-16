@@ -1,0 +1,1 @@
+# poc-elastic-bulk-insert-query
