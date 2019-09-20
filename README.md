@@ -8,14 +8,18 @@
 1. cuando se mete un documento, se consulta por la cantidad de documentos de la localidad, provincia y país
 
 ### REST API
-dirección default: http://localhost:8080
+
+dirección default: [http://localhost:8080](http://localhost:8080)
 
 #### GET /status
+
 devuelve siempre true
 
 #### POST /events
+
 recibe
-```
+
+```js
 {
     timestamp: Instant,
     localidad: String
@@ -24,7 +28,7 @@ recibe
 
 devuelve 
 
-```
+```js
 {
     localidad: String,
     casosLocalidad: int,
@@ -40,8 +44,9 @@ devuelve
 
 no espera cuerpo, inserta 100 eventos por cada localidad
 
-devuelve 
-```
+devuelve
+
+```js
 {
     localidad: String,
     casosLocalidad: int,

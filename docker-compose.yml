@@ -13,9 +13,12 @@ services:
     container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
     environment:
-      - cluster.name=docker-cluster
+      - cluster.name=poc-elastic-bulk-insert-query
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      # dev
+      - discovery.type=single-node
+      # disable non-free xpack security
       - xpack.security.enabled=false
       - xpack.watcher.enabled=true
     ulimits:
