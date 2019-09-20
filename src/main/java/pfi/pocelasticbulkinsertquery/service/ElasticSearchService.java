@@ -6,14 +6,14 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.util.EntityUtils;
 import org.elasticsearch.ElasticsearchException;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -55,15 +55,13 @@ public class ElasticSearchService {
         // verificar que existan los índices, y crear los que no estén
         for (Provincia provincia : Provincia.values()) {
             String index = "provincia-" + provincia.getId();
-            GetIndexRequest gir = new GetIndexRequest();
-            gir.indices(index);
-            if (!client.indices().exists(gir, RequestOptions.DEFAULT)) {
+            if (!client.indices().exists(new GetIndexRequest(index), RequestOptions.DEFAULT)) {
                 // crear índice
                 client.indices().create(new CreateIndexRequest(index), RequestOptions.DEFAULT);
 
                 // configurar field mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
                 PutMappingRequest putMappingRequest = new PutMappingRequest(index);
-                putMappingRequest.type("_doc");
+//                putMappingRequest.type("_doc");
                 XContentBuilder builder = XContentFactory.jsonBuilder();
                 builder.startObject();
                 {
@@ -166,7 +164,7 @@ public class ElasticSearchService {
 
         IndexRequest request = new IndexRequest(index)
                 .source(objectMapper.writeValueAsString(event), XContentType.JSON)
-                .type("_doc");
+                ;//.type("_doc");
         try {
             client.index(request, RequestOptions.DEFAULT);
             //log.info("inserted " + event);

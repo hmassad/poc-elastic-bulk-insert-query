@@ -23,9 +23,15 @@ repositories {
 }
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.elasticsearch.client:elasticsearch-rest-high-level-client')
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// incluir elasticsearch, client y high level client explícitamente
+	// porque al actualizar de versión se pueden calculan mal las versiones de las dependencias
+	implementation "org.elasticsearch:elasticsearch:$elasticsearchVersion"
+	implementation "org.elasticsearch.client:elasticsearch-rest-client:$elasticsearchVersion"
+	implementation "org.elasticsearch.client:elasticsearch-rest-high-level-client:$elasticsearchVersion"
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'

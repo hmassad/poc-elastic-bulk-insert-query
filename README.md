@@ -26,7 +26,7 @@ recibe
 }
 ```
 
-devuelve 
+devuelve
 
 ```js
 {
