@@ -21,7 +21,9 @@ recibe
     localidad: String
 }
 ```
+
 devuelve 
+
 ```
 {
     localidad: String,
@@ -35,7 +37,9 @@ devuelve
 ```
 
 #### POST /bulk
+
 no espera cuerpo, inserta 100 eventos por cada localidad
+
 devuelve 
 ```
 {
@@ -49,29 +53,43 @@ devuelve
 }
 ```
 
+## Prerrequisitos
+
+### vm.max_map_count
+
+En Linux, asegurarse que el host que corre docker, no el contenedor, tenga seteado `vm.max_map_count` en un valor recomendado por elasticsearch
+
+Para cambiarlo ejecutar
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
+Para más info, consultar https://www.elastic.co/guide/en/elasticsearch/reference/5.0/vm-max-map-count.html#vm-max-map-count
+
 ## Running
 
 La imagen de docker de nuestra app se llama `backend`
 
 Correr con docker elastic+kibana y debugear java 
 
-```
+```bash
 sudo docker-compose -f docker-compose-elastic-kibana.yml up
 ```
 
 Correr con docker todo junto (elastic+kibana+backend)
 
-```
-sudo gradlew build
+```bash
+./gradlew build -x test
 sudo docker-compose up
 ```
 
 Recompilar la app y meterla en docker
 
-```
+```bash
 sudo docker-compose stop backend
 sudo docker-compose rm backend
-sudo gradlew build
+./gradlew build -x test
 sudo docker-compose up
 ```
 
